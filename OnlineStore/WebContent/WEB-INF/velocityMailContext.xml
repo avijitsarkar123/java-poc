@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host"><value>127.0.0.1</value></property>
+    </bean>
+    
+    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from"><value>customerservice@tasq.com</value></property>
+        <property name="subject"><value>TASQ Online Store - Order Confirmation</value></property>
+    </bean>
+
+    <bean id="orderConfirmationEmailService" class="com.avijit.poc.onlinestore.business.service.impl.OrderConfirmationEmailService">
+    <!-- set to true for enabling email -->
+        <property name="mailSender"><ref bean="mailSender"/></property>
+        <property name="templateMessage"><ref bean="templateMessage" /></property>
+        <property name="velocityEngine"><ref bean="velocityEngine" /></property>
+        <property name="velocityTemplate"><value>VelocityOrderConfirmationMailTemplate.vm</value></property>
+        <property name="orderConfirmationMailJmsReceiverder"><ref bean="orderConfirmationMailJmsReceiver" /></property>
+    </bean>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="orderConfirmationMailingJob" 
+    				class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orderConfirmationEmailService" />
+		<property name="targetMethod" value="sendMail" />
+    </bean>
+    
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    	<property name="jobDetail" ref="orderConfirmationMailingJob" />
+    	<property name="startDelay" value="120000" />
+    	<property name="repeatInterval" value="120000" />
+    </bean>
+    
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="triggers">
+    		<list>
+    			<ref bean="simpleTrigger"/>
+    		</list>
+    	</property>
+    </bean>
+    
+</beans>

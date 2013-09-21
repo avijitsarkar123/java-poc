@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+	
+	<diskStore path="c:\\cache" />
+	
+	<defaultCache eternal="true" maxElementsInMemory="100" overflowToDisk="false" />
+	
+	<cache  name="partTypeCache" 
+			maxElementsInMemory="100" 
+			eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="manufacturerCache" 
+	        maxElementsInMemory="100" 
+	        eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="shippingMethodsCache" 
+	        maxElementsInMemory="20" 
+	        eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="countryCache" 
+	        maxElementsInMemory="300" 
+	        eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="cardTypeCache" 
+	        maxElementsInMemory="10" 
+	        eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="bankCache" 
+	        maxElementsInMemory="10" 
+	        eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="countryStatesCache" 
+	        maxElementsInMemory="500" 
+	        eternal="true"
+			overflowToDisk="false" />
+			
+	<cache  name="manufacturerPartCache"
+   			maxElementsInMemory="500"
+		    eternal="false"
+		    diskSpoolBufferSizeMB="10"
+		    timeToIdleSeconds="300"
+		    memoryStoreEvictionPolicy="LFU"
+		    transactionalMode="off">
+		<persistence strategy="localTempSwap"/>
+	</cache>
+	
+	<cache  name="partTypePartCache"
+   			maxElementsInMemory="500"
+		    eternal="false"
+		    diskSpoolBufferSizeMB="10"
+		    timeToIdleSeconds="300"
+		    memoryStoreEvictionPolicy="LFU"
+		    transactionalMode="off">
+		<persistence strategy="localTempSwap"/>
+	</cache>
+			
+	<cache  name="partDetailCache"
+   			maxElementsInMemory="500"
+		    eternal="false"
+		    diskSpoolBufferSizeMB="10"
+		    timeToIdleSeconds="300"
+		    memoryStoreEvictionPolicy="LFU"
+		    transactionalMode="off">
+		<persistence strategy="localTempSwap"/>
+	</cache>
+			
+</ehcache>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:security="http://www.springframework.org/schema/security" 
+ xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+ 		http://www.springframework.org/schema/security    
+ 		http://www.springframework.org/schema/security/spring-security-3.1.xsd"> 
+  
+	<security:http auto-config="false" use-expressions="true" access-denied-page="/denied.do" >   
+  
+	   	<security:intercept-url pattern="/login.do*" access="permitAll" requires-channel="http"/>
+	   	<security:intercept-url pattern="/*/register.do*" access="permitAll" requires-channel="http"/>
+	   	<security:intercept-url pattern="/resources/**" access="permitAll" requires-channel="http"/>
+	   	<security:intercept-url pattern="/**.do*" access="hasRole('USER')" requires-channel="http"/>
+	   	<security:intercept-url pattern="/*/*.do*" access="hasRole('USER')" requires-channel="http"/>
+	  
+	   	<security:form-login    
+	    	login-page="/login.do"    
+	    	username-parameter="loginName"
+	    	password-parameter="loginPassword"
+	    	login-processing-url="/processLogin"
+	    	authentication-failure-url="/login.do?error=true"    
+	    	default-target-url="/home.do"/>
+	   	
+	   	<security:openid-login    
+	   	    login-processing-url="/processOpenIDLogin"
+	    	authentication-failure-handler-ref="openIDAuthenticationFailureHandler"
+	    	user-service-ref="openIdUserDetailsService"
+	    	default-target-url="/home.do">
+	    	
+	   	    <security:attribute-exchange identifier-match="https://www.google.com/.*" >
+	            <security:openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true" />
+	            <security:openid-attribute name="firstName" type="http://axschema.org/namePerson/first" required="true" />
+	            <security:openid-attribute name="lastName" type="http://axschema.org/namePerson/last" required="true"/>
+         	</security:attribute-exchange>
+	   	    
+	   	</security:openid-login>
+	    
+	   	<security:logout    
+	   	    logout-url="/logout.do"
+    		invalidate-session="true"    
+    		logout-success-url="/login.do" />   
+  
+  	</security:http>
+  	
+	<bean id="openIDAuthenticationUserAttributes" class="com.avijit.poc.onlinestore.security.OpenIDAuthenticationUserAttributes">
+        <property name="openIDUserAttributeNames">
+            <set value-type="java.lang.String">
+    			<value type="java.lang.String">firstName</value>
+    			<value type="java.lang.String">email</value>
+    			<value type="java.lang.String">lastName</value>
+			</set>
+        </property>
+    </bean>
+    
+	<bean id="openIDAuthenticationFailureHandler" class="com.avijit.poc.onlinestore.security.OpenIDAuthenticationFailureHandler">
+        <property name="userRegistrationUrl"><value>/userManagement/register.do</value></property>
+        <property name="openIDAuthenticationUserAttributes" ref="openIDAuthenticationUserAttributes" />
+    </bean>
+ 
+	<security:authentication-manager>     
+  		<security:authentication-provider ref="onlineStoreAthenticationProvider" /> 
+  	</security:authentication-manager>
+
+</beans>

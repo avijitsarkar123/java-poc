@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd" >
+
+    <bean id="mqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory" >
+        <property name="brokerURL" >
+            <value>tcp://localhost:61616</value>
+        </property>
+    </bean>
+
+    <bean
+        id="pooledConnectionFactory"
+        class="org.apache.activemq.pool.PooledConnectionFactory"
+        destroy-method="stop"
+        init-method="start" >
+
+        <property name="maxConnections" value="10" />
+        <property name="connectionFactory" ref="mqConnectionFactory" />
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate" >
+        <property name="connectionFactory" ref="mqConnectionFactory" />
+    </bean>
+    
+    <context:annotation-config />
+    <context:component-scan base-package="com.avijit.poc.onlinestore.jms" />
+
+    <!--
+    *****************************************************************************
+    * CONFIG FOR SYNC MESSAGING             									*
+    *****************************************************************************       -->
+
+    <!-- <bean id="orderRequest.request" class="org.apache.activemq.command.ActiveMQQueue" >
+        <constructor-arg value="OrderRequest.request" />
+    </bean>
+
+    <bean id="orderRequest.response" class="org.apache.activemq.command.ActiveMQQueue" >
+        <constructor-arg value="OrderRequest.response" />
+    </bean>
+
+    <bean id="syncMessagingResponseGateway" class="com.avijit.poc.activemq.sync.SyncOrderRequestMessageConsumer" >
+        <property name="jmsTemplate" ref="jmsTemplate" />
+        <property name="replyQueue" ref="orderRequest.response" />
+    </bean>
+
+    <bean id="orderRequestMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" >
+        <property name="connectionFactory" ref="pooledConnectionFactory" />
+        <property name="destination" ref="orderRequest.request" />
+        <property name="messageListener" ref="syncMessagingResponseGateway" />
+        <property name="concurrentConsumers" value="1" />
+        <property name="receiveTimeout" value="10000" />
+    </bean> -->
+
+    <!--
+    *****************************************************************************
+    * CONFIG FOR ASYNC MESSAGING            									*
+    *****************************************************************************       -->
+
+    <bean id="orderConfirmationEmailQueue" class="org.apache.activemq.command.ActiveMQQueue" >
+        <constructor-arg value="queue.order.confirmEmail" />
+    </bean>
+    
+    <bean id="messageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" >
+        <property name="connectionFactory" ref="pooledConnectionFactory" />
+        <property name="destination" ref="orderConfirmationEmailQueue" />
+        <property name="messageListener" ref="orderConfirmationEmailMessageListener" />
+        <property name="concurrentConsumers" value="2" />
+    </bean>
+
+</beans>

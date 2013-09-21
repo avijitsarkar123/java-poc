@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.directwebremoting.org/schema/spring-dwr       
+	http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd ">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.avijit.poc.onlinestore.presentation"/>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+	<dwr:configuration>
+      	<dwr:convert type="bean" class="com.avijit.poc.onlinestore.business.entity.State" />
+      	<dwr:convert type="bean" class="com.avijit.poc.onlinestore.business.entity.Address" />
+  	</dwr:configuration>    
+	<dwr:annotation-config id="dwrConfig" />     
+	<dwr:url-mapping />     
+	<dwr:controller id="dwrController" debug="true" />     
+	     
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">         
+		<property name="order" value="1" />     
+	</bean> 
+	
+</beans>

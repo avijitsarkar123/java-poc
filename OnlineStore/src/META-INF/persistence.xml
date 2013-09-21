@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="onlineStorePersistentUnit" transaction-type="RESOURCE_LOCAL">
+		<non-jta-data-source>java:jboss/datasources/OnlineStoreDS</non-jta-data-source>
+		<class>com.avijit.poc.onlinestore.business.entity.Part</class>
+		<class>com.avijit.poc.onlinestore.business.entity.Manufacturer</class>
+		<class>com.avijit.poc.onlinestore.business.entity.PartType</class>
+		<class>com.avijit.poc.onlinestore.business.entity.Bank</class>
+		<class>com.avijit.poc.onlinestore.business.entity.ShippingMethod</class>
+		<class>com.avijit.poc.onlinestore.business.entity.CreditCardType</class>
+		<class>com.avijit.poc.onlinestore.business.entity.LineItem</class>
+		<class>com.avijit.poc.onlinestore.business.entity.Order</class>
+		<class>com.avijit.poc.onlinestore.business.entity.OrderBilling</class>
+		<class>com.avijit.poc.onlinestore.business.entity.OrderShipping</class>
+		<class>com.avijit.poc.onlinestore.business.entity.State</class>
+		<class>com.avijit.poc.onlinestore.business.entity.Tax</class>
+		<class>com.avijit.poc.onlinestore.business.entity.Country</class>
+		<class>com.avijit.poc.onlinestore.business.entity.Address</class>
+		<class>com.avijit.poc.onlinestore.business.entity.PartSpecification</class>
+		<class>com.avijit.poc.onlinestore.business.entity.OrderPaymentInfo</class>
+	</persistence-unit>
+</persistence>

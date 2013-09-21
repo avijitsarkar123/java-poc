@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://onlinestore.com/OrderService/schema"
+	xmlns:tns="http://onlinestore.com/OrderService/schema">
+	
+    <xs:element name="address">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="firstName" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="lastName" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="address1" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="address2" minOccurs="0" maxOccurs="1" type="xs:string" />
+                <xs:element name="city" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="state" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="zip" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="country" minOccurs="1" maxOccurs="1" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="orderBilling">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tns:address" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="tns:contactInfo" minOccurs="1" maxOccurs="1" />
+                <xs:element name="paymentInfo" minOccurs="1" maxOccurs="1" >
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="achAccountNum" minOccurs="1" maxOccurs="1" type="xs:string" />
+                            <xs:element name="routingNum" minOccurs="1" maxOccurs="1" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tax" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="rate" minOccurs="1" maxOccurs="1" type="xs:string" />
+                            <xs:element name="amount" minOccurs="1" maxOccurs="1" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="discount" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="code" minOccurs="1" maxOccurs="1" type="xs:string" />
+                            <xs:element name="amount" minOccurs="1" maxOccurs="1" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="lineItem">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="lineItemNum" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="partCd" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="partName" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="quntity" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="unitPrice" minOccurs="1" maxOccurs="1" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="lineItems" >
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element ref="tns:lineItem" minOccurs="1" maxOccurs="unbounded" />
+    		</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="orderShipping">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="shipmentWeight" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="shippingTotal" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element ref="tns:address" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="tns:contactInfo" minOccurs="1" maxOccurs="1" />
+                <xs:element name="shippingMethod" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="code" minOccurs="1" maxOccurs="1" type="xs:string" />
+                            <xs:element name="rate" minOccurs="1" maxOccurs="1" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="contactInfo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="phoneNum" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="emailAddress" minOccurs="1" maxOccurs="1" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="order">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerOrderNumber" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="orderDate" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element ref="tns:lineItems" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="tns:orderBilling" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="tns:orderShipping" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="orders">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tns:order" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="orderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tns:orders" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="orderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerOrderNumber" minOccurs="1" maxOccurs="1" type="xs:string" />
+                <xs:element name="onlineStoreOrderNumber" minOccurs="1" maxOccurs="1" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

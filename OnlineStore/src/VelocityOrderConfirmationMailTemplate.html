@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Online Store</title>
+<link href="cid:css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="content">
+		<div id="col1">
+			<div id="logo">
+				<a href="index.html"> <img src="cid:headerlogo" alt="Online Store" border="0" />
+				</a>
+			</div>
+		</div>
+
+		<div id="col2">
+			<div id="product">
+				<div class="clear"></div>
+			</div>
+			<div id="category">
+				<div id="product2">
+					<div class="clear"></div>
+				</div>
+
+				<h2>Thank you for your Order</h2>
+				<h6>
+					Your Order Number is: <strong>$order.orderNumber</strong>
+				</h6>
+				<p>
+					Your order will be processed shortly. In the meantime, if you have
+					any questions, you can reach us by calling (888) 888-8888 or by
+					filling our the form on our <a href="#">contact page</a>.
+				</p>
+
+				<table width="536" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="no-bottom">Once again, thank you for shopping with
+							us!<br /> Online Store, Inc.
+						</td>
+						<td class="no-bottomtop">
+							<div align="right">
+								<img src="cid:printerlogo" alt="print" width="16" height="16"
+									border="0" /> <a href="#">Printer Friendly Version</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<h5>Order Details</h5>
+				<table width="536" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<th>Item</th>
+						<th><div align="center">Unit Price</div></th>
+						<th><div align="center">Qty</div></th>
+						<th><div align="center">Subtotal</div></th>
+					</tr>
+
+					<!-- Repeat the below TR for all the line items -->
+
+					#foreach( $lineItem in $order.lineItemList )
+					<tr>
+						<td class="blue">
+							<p>
+								<strong>$lineItem.part.partName</strong>
+							</p>
+							<p>Model #: $lineItem.part.modelNumber</p>
+							<p>MFR Part #: $lineItem.part.partCd</p>
+						</td>
+						<td class="blue">
+							<div align="center" class="blue">$ $lineItem.unitPrice</div>
+						</td>
+						<td class="blue">
+							<div align="center">$lineItem.qty</div>
+						</td>
+						<td class="blue">
+							<div align="center" class="blue-bold">$ $lineItem.unitPrice</div>
+						</td>
+					</tr>
+					#end
+
+					<tr>
+						<td class="no-bottom" colspan="3"
+							style="border-top: 2px solid #eee;">
+							<div align="right" class="blue">
+								<h4>
+									<strong>Subtotal:</strong>
+								</h4>
+							</div>
+						</td>
+						<td class="no-bottom" style="border-top: 2px solid #eee;">
+							<div align="center">
+								<h4 class="blue-bold">$ $order.orderBilling.lineItemTotal</h4>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<table width="536" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="no-bottom">
+							<h5 style="margin-bottom: 0px;">Billing Information</h5>
+						</td>
+						<td class="no-bottomtop">
+							<h5 style="margin-bottom: 0px;">Shipping Information</h5>
+						</td>
+					</tr>
+					<tr>
+						<td width="265" class="no-bottomtop" style="padding-left: 10px;">
+							<p>
+								Method of Payment:
+								$order.orderBilling.orderPaymentInfo.cardType<br />
+								Credit Card Number:
+								$order.orderBilling.orderPaymentInfo.partialCardNumber<br />
+								Expiration Date:
+								$order.orderBilling.orderPaymentInfo.expirationDate
+							</p>
+							<p>&nbsp;</p>
+							<p>
+								$order.orderBilling.billingAddress.name<br />
+								$order.orderBilling.billingAddress.addressLine1<br />
+								$order.orderBilling.billingAddress.addressLine2<br />
+								$order.orderBilling.billingAddress.city,
+								$order.orderBilling.billingAddress.state
+								$order.orderBilling.billingAddress.zip<br />
+								$order.orderBilling.billingAddress.country<br /> Phone:
+								$order.orderBilling.billingAddress.phoneNumber
+							</p>
+							<p>&nbsp;</p>
+						</td>
+						<td class="no-bottomtop" style="padding-left: 10px;">
+							<p>Carrier: $order.orderShipping.orderShippingMethod.carrier</p>
+							<p>
+								Shipping Method:
+								$order.orderShipping.orderShippingMethod.shippingMethodName<br />
+								Shipping Cost: $ $order.orderShipping.shippingCost
+							</p>
+							<p>&nbsp;</p>
+							<p>
+								$order.orderShipping.shippingAddress.name<br />
+								$order.orderShipping.shippingAddress.addressLine1<br />
+								$order.orderShipping.shippingAddress.addressLine2<br />
+								$order.orderShipping.shippingAddress.city,
+								$order.orderShipping.shippingAddress.state
+								$order.orderShipping.shippingAddress.zip<br />
+								$order.orderShipping.shippingAddress.country<br /> Phone:
+								$order.orderShipping.shippingAddress.phoneNumber
+							</p>
+							<p>&nbsp;</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<h5 class="black" style="padding: 5px 0 5px 0;">
+			<strong>SUBTOTAL:$ ${order.orderBilling.lineItemTotal}</strong>
+		</h5>
+		<h5 class="black" style="padding-bottom: 5px;">
+			<strong>SHIPPING:$ ${order.orderBilling.shippingPrice}</strong>
+		</h5>
+		<h5 class="blue" style="padding-bottom: 10px;">
+			<span class="black" style="font-weight: bold">TAX: $
+				${order.orderBilling.tax.taxAmt}</span><br />
+		</h5>
+		<h5 class="black" style="padding-bottom: 10px;">
+			<strong>&nbsp;TOTAL: $ ${order.orderBilling.orderTotal}</strong>
+		</h5>
+
+		<p class="blue" style="padding-bottom: 10px;">&nbsp;</p>
+	</div>
+	<div id="footer" style="border-top: 1px solid #ddd;">
+		<div id="fleft">
+			<p>
+				Copyright &copy; 2007 Online Store, Inc. All Rights Reserved. <a
+					href="#">Privacy Policy.</a>
+			</p>
+		</div>
+		<div id="fright">
+			<a href="http://www.onlinestore.com"><img src="cid:footerlogo"
+				alt="Online Store" width="102" height="35" border="0" /></a>
+		</div>
+		<div class="clear"></div>
+	</div>
+</body>
+</html>
