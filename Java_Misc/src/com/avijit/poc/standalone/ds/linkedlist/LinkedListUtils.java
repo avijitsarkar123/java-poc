@@ -11,7 +11,7 @@ public class LinkedListUtils {
 		
 		ListNode currentNode = head;
 		
-		StringBuilder builder = new StringBuilder("List: ");
+		StringBuilder builder = new StringBuilder("List [").append(getListLength(head)).append("] : ");
 		while (currentNode != null) {
 			builder.append(currentNode.getData()).append(" -> ");
 			currentNode = currentNode.getNextListNode();
@@ -172,5 +172,113 @@ public class LinkedListUtils {
 		currentNode = null;
 		
 		return head;
+	}
+	
+	/**
+	 * User two pointer and set both of them to head.
+	 * Move the fast pointer to nth node from start, once it reaches there now move both the pointers together until
+	 * the fast pointer reaches the end.
+	 * At this point the slow pointer will be at the nth node from the end.
+	 * 
+	 * @param head
+	 * @return
+	 */
+	public static ListNode getNthNodeFromEndOfLinkedList(ListNode head, int nthNodeNumber) {
+		
+		ListNode nthNodePointer = head;
+		ListNode fastPointer = head;
+		
+		int counter = 0;
+		while(fastPointer != null) {
+			
+			if (counter <= nthNodeNumber) {
+				fastPointer = fastPointer.getNextListNode();
+			}
+			
+			counter++;
+			fastPointer = fastPointer.getNextListNode();
+			nthNodePointer = nthNodePointer.getNextListNode();
+		}
+		
+		return nthNodePointer;
+	}
+	
+	public static ListNode reverseLinkedList(ListNode head) {
+		
+		ListNode tempNode = null;
+		ListNode nextNode = head;
+		
+		while (head != null) {
+			nextNode = nextNode.getNextListNode();
+			head.setNextListNode(tempNode);
+			tempNode = head;
+			head = nextNode;
+		}
+		
+		return tempNode;
+	}
+	
+	public static ListNode insertNodeInSortedList(ListNode head, ListNode newNode) {
+		
+		ListNode currentNode = head;
+		ListNode tempNode = head;
+		while (tempNode != null) {
+			
+			if (newNode.getData() <= currentNode.getData()) {
+				newNode.setNextListNode(currentNode);
+				tempNode.setNextListNode(newNode);
+				break;
+			}
+			
+			tempNode = currentNode;
+			currentNode = currentNode.getNextListNode();
+		}
+		
+		return head;
+	}
+	
+	public static ListNode findMiddleNodeOfLinkedList(ListNode head) {
+		
+		ListNode slowPointer = head;
+		ListNode fastPointer = head;
+		
+		if (head == null) {
+			throw new IllegalArgumentException("EMPTY LIST");
+		} else if (head.getNextListNode() == null) {
+			return head;
+		}
+		
+		while (fastPointer != null) {
+			fastPointer = fastPointer.getNextListNode();
+			
+			if (fastPointer != null) {
+				fastPointer = fastPointer.getNextListNode();
+			} else {
+				break;
+			}
+			
+			slowPointer = slowPointer.getNextListNode();
+		}
+		
+		
+		return slowPointer;
+	}
+	
+	public static boolean isEvenLengthLinkedList(ListNode head) {
+	
+		while (head != null && head.getNextListNode() != null) {
+			head = head.getNextListNode().getNextListNode();
+		}
+			
+		return (head == null) ? true : false;
+	}
+	
+	public static void displayLinkedListFromEnd(ListNode node) {
+		if (node == null) {
+			return;
+		}
+		
+		displayLinkedListFromEnd(node.getNextListNode());
+		System.out.print(node.getData() + " -> ");
 	}
 }

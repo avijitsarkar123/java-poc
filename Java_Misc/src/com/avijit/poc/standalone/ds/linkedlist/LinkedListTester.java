@@ -38,6 +38,37 @@ public class LinkedListTester {
 		head= LinkedListUtils.deleteNodeFromMiddle(head, 3);
 		printLinkedListStatus(head);
 		
+		System.out.println("LinkedList has loop? " + CircularLinkedListUtils.isCircularLoopLinkedList(head));
+		
+		int nthNode = 3;
+		ListNode nthLinkedListNode = LinkedListUtils.getNthNodeFromEndOfLinkedList(head, nthNode);
+		System.out.println(nthNode + " Node value: " + nthLinkedListNode.getData());
+		
+		head = LinkedListUtils.reverseLinkedList(head);
+		printLinkedListStatus(head);
+		
+		// Create a sorted list of 5 nodes
+		System.out.println("CREATE A 5 NODES SORTED LIST");
+		head = createListNode(11);
+		head = LinkedListUtils.addNodeAtEnd(head, createListNode(22));
+		head = LinkedListUtils.addNodeAtEnd(head, createListNode(33));
+		head = LinkedListUtils.addNodeAtEnd(head, createListNode(44));
+		head = LinkedListUtils.addNodeAtEnd(head, createListNode(55));
+		head = LinkedListUtils.addNodeAtEnd(head, createListNode(66));
+		head = LinkedListUtils.addNodeAtEnd(head, createListNode(77));
+		printLinkedListStatus(head);
+		
+		System.out.println("INSERT NODE OF VALUE 40");
+		head = LinkedListUtils.insertNodeInSortedList(head, createListNode(40));
+		printLinkedListStatus(head);
+		
+		ListNode middleNode = LinkedListUtils.findMiddleNodeOfLinkedList(head);
+		System.out.println("MIDDLE NODE VALUE: " + middleNode.getData());
+		
+		System.out.println("PREVIOUS LIST EVEN? " + LinkedListUtils.isEvenLengthLinkedList(head));
+		
+		System.out.println("PREVIOUS LIST IN REVERSE ORDER");
+		LinkedListUtils.displayLinkedListFromEnd(head);
 	}
 	
 	private static ListNode createListNode(int data) {
@@ -48,8 +79,6 @@ public class LinkedListTester {
 	}
 	
 	private static void printLinkedListStatus(ListNode head) {
-		System.out.println(LinkedListUtils.getListLength(head));
 		LinkedListUtils.printList(head);
 	}
-	
 }
