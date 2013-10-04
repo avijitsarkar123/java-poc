@@ -281,4 +281,27 @@ public class LinkedListUtils {
 		displayLinkedListFromEnd(node.getNextListNode());
 		System.out.print(node.getData() + " -> ");
 	}
+	
+	public static ListNode mergeTwoSortedListIntoSingleList(ListNode head1, ListNode head2) {
+		
+		ListNode result;
+		
+		if (head1 == null) {
+			return head2;
+		}
+		if (head2 == null) {
+			return head1;
+		}
+		
+		if (head1.getData() < head2.getData()) {
+			result = head1;
+			result.setNextListNode(mergeTwoSortedListIntoSingleList(head1.getNextListNode(), head2));
+		} else {
+			result = head1;
+			result.setNextListNode(mergeTwoSortedListIntoSingleList(head1.getNextListNode(), head2));
+		}
+		
+		return result;
+	}
+	
 }

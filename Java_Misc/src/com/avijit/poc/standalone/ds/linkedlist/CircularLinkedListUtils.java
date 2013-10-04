@@ -1,7 +1,5 @@
 package com.avijit.poc.standalone.ds.linkedlist;
 
-import java.security.acl.LastOwnerException;
-import java.util.List;
 
 public class CircularLinkedListUtils {
 	
@@ -386,5 +384,31 @@ public class CircularLinkedListUtils {
 		currentNode = null;
 		
 		return head;
+	}
+	
+	public static Object[] splitCircularListInTwoCircularLists(ListNode head) {
+		
+		ListNode head1;
+		ListNode head2;
+		ListNode slowPointer = head;
+		ListNode fastPointer = head;
+		
+		while (fastPointer.getNextListNode() != head && fastPointer.getNextListNode().getNextListNode() != head) {
+			fastPointer = fastPointer.getNextListNode().getNextListNode();
+			slowPointer = slowPointer.getNextListNode();
+		}
+		
+		//Check for Even
+		if (fastPointer.getNextListNode().getNextListNode() == head) {
+			fastPointer = fastPointer.getNextListNode();
+		}
+		
+		head2 = slowPointer.getNextListNode();
+		fastPointer.setNextListNode(head2);
+		
+		slowPointer.setNextListNode(head);
+		head1 = head;
+		
+		return new Object[] {head1, head2};
 	}
 }

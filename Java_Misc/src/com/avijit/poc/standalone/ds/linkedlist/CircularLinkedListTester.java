@@ -42,6 +42,14 @@ public class CircularLinkedListTester {
 		head= CircularLinkedListUtils.deleteNodeFromMiddle(head, 3);
 		printLinkedListStatus(head);
 		
+		head= CircularLinkedListUtils.addNodeAtBeginning(head, createListNode(89));
+		printLinkedListStatus(head);
+		
+		System.out.println("SPLIT INTO TWO CIRCULAR LISTS");
+		Object[] headNodes = CircularLinkedListUtils.splitCircularListInTwoCircularLists(head);
+		printLinkedListStatus((ListNode)headNodes[0]);
+		printLinkedListStatus((ListNode)headNodes[1]);
+		
 	}
 	
 	private static ListNode createListNode(int data) {

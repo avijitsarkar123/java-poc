@@ -33,6 +33,7 @@ public class CustomMap<K,V> {
 	}
 	
 	public void put(K key, V value) {
+		
 		Entry<K, V> newEntry = new Entry<K, V>(key, value);
 		newEntry.setNext(null);
 		
