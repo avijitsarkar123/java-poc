@@ -11,6 +11,10 @@ public class QuickSort {
 		
 		System.out.println(Arrays.toString(input));
 	}
+	
+	public static void sort(int[] input, int n) {
+		quicksort(input, 0, n - 1);
+	}
 
 	private static void quicksort(int[] input, int start, int end) {
 		

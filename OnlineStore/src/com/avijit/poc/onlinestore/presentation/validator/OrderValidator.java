@@ -13,7 +13,7 @@ public class OrderValidator implements Validator {
     private static final String PHONE_REGEXP = "/(\\({0,1})(\\d{3})(\\){0,1})(\\s|-)*(\\d{3})(\\s|-)*(\\d{4})/";
     private static final String CC_EXPIRATION_REGEX = "(0[1-9]|1[1-2])[ \\ ](2008-2012)";
 
-    public boolean supports(Class clazz) {
+    public boolean supports(Class<?> clazz) {
         return OrderForm.class.isAssignableFrom(clazz);
     }
 

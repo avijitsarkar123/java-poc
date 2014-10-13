@@ -21,7 +21,7 @@
 	    	username-parameter="loginName"
 	    	password-parameter="loginPassword"
 	    	login-processing-url="/processLogin"
-	    	authentication-failure-url="/login.do?error=true"    
+	    	authentication-failure-url="/login.do?error=true"   
 	    	default-target-url="/home.do"/>
 	   	
 	   	<security:openid-login    

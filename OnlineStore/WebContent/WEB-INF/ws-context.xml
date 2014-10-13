@@ -12,6 +12,7 @@
 	http://www.springframework.org/schema/web-services/web-services-2.0.xsd ">
 	
     <sws:interceptors>
+		
 		<bean class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
            <description>
     			This interceptor validates both incoming and outgoing message contents according to the 'orders-service.xsd' XML Schema file.
@@ -20,9 +21,11 @@
             <property name="validateRequest" value="true"/>
             <property name="validateResponse" value="true"/>
         </bean>
+        
         <bean class="org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor">
            <description>This interceptor logs the message payload.</description>
         </bean>
+        
     </sws:interceptors>
     
     <sws:dynamic-wsdl id="OrderService"
@@ -30,10 +33,10 @@
 		  locationUri="/services/"
 		  targetNamespace="http://onlinestore.com/OrderService/schema">
 		  <sws:xsd location="/resources/xsd/orders-service.xsd"/>
-	 </sws:dynamic-wsdl>
+	</sws:dynamic-wsdl>
 	 
-	 <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-	  <property name="contextPath" value="com.avijit.poc.onlinestore.orderbo" />
-	 </bean>
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="com.avijit.poc.onlinestore.orderbo" />
+	</bean>
     	
 </beans>	

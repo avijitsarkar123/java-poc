@@ -1,0 +1,56 @@
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="Address">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="Name" />
+				<xs:element type="xs:string" name="Street" />
+				<xs:element type="xs:string" name="City" />
+				<xs:element type="xs:string" name="State" />
+				<xs:element type="xs:int" name="Zip" />
+				<xs:element type="xs:string" name="Country" />
+			</xs:sequence>
+			<xs:attribute type="xs:string" name="Type" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Item">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="ProductName" />
+				<xs:element type="xs:byte" name="Quantity" />
+				<xs:element type="xs:float" name="USPrice" />
+				<xs:element type="xs:string" name="Comment" minOccurs="0" />
+				<xs:element type="xs:date" name="ShipDate" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute type="xs:string" name="PartNumber" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Item" maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="PurchaseOrders">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PurchaseOrder" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Address" maxOccurs="unbounded"	minOccurs="0" />
+							<xs:element type="xs:string" name="DeliveryNotes" minOccurs="0" />
+							<xs:element ref="Items" maxOccurs="1" minOccurs="1" />
+						</xs:sequence>
+						<xs:attribute type="xs:int" name="PurchaseOrderNumber" use="optional" />
+						<xs:attribute type="xs:date" name="OrderDate" use="optional" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
